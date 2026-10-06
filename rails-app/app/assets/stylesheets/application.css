@@ -1,10 +1,477 @@
 /*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
+ * App de Todos — estilos globais
  */
+
+:root {
+  --bg: #f4f5fb;
+  --surface: #ffffff;
+  --text: #1e2235;
+  --text-muted: #7a7f99;
+  --primary: #6c5ce7;
+  --primary-dark: #5a4bd1;
+  --primary-soft: #eeebff;
+  --danger: #e74c3c;
+  --success: #27ae60;
+  --border: #e8e9f2;
+  --shadow: 0 10px 30px rgba(30, 34, 53, 0.08);
+  --radius: 14px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(160deg, #eef0fb 0%, #f6f4ff 45%, #fdf3f7 100%);
+  background-attachment: fixed;
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 48px 20px 80px;
+}
+
+/* ---------- Cabeçalho ---------- */
+
+.hero {
+  margin-bottom: 28px;
+}
+
+.hero h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.hero h1 span {
+  color: var(--primary);
+}
+
+.hero p {
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-size: 0.95rem;
+}
+
+/* ---------- Cartões ---------- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
+.card + .card {
+  margin-top: 16px;
+}
+
+.card h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- Formulários ---------- */
+
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text);
+  background: var(--bg);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+  background: var(--surface);
+}
+
+.check-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.check-field label {
+  margin: 0;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.95rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ---------- Botões ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(108, 92, 231, 0.35);
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+  padding: 8px 12px;
+}
+
+.btn-ghost:hover {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.btn-back {
+  margin-top: 20px;
+}
+
+/* ---------- Nova tarefa (form inline) ---------- */
+
+.new-todo {
+  display: flex;
+  gap: 10px;
+}
+
+.new-todo input[type="text"] {
+  flex: 1;
+}
+
+/* ---------- Lista de tarefas ---------- */
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px 16px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  animation: slide-in 0.25s ease;
+}
+
+.todo-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(30, 34, 53, 0.12);
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Checkbox customizado */
+
+.todo-check input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.todo-check {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.todo-check span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 2px solid #cfd2e4;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.todo-check svg {
+  width: 14px;
+  height: 14px;
+  stroke: #fff;
+  stroke-width: 3;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.todo-check input:checked + span {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.todo-check input:checked + span svg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.todo-check input:focus-visible + span {
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+/* Texto da tarefa */
+
+.todo-title {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 500;
+  position: relative;
+  width: fit-content;
+}
+
+.todo-item.completed .todo-title {
+  color: var(--text-muted);
+}
+
+.todo-item.completed .todo-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 55%;
+  height: 2px;
+  background: var(--text-muted);
+  border-radius: 2px;
+}
+
+/* Botão de deletar */
+
+.todo-delete {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: #c3c6d8;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.todo-delete svg {
+  width: 17px;
+  height: 17px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+}
+
+.todo-delete:hover {
+  background: #fdecea;
+  color: var(--danger);
+}
+
+/* ---------- Barra de progresso / stats ---------- */
+
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.progress {
+  flex: 1;
+  height: 8px;
+  background: var(--border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), #a29bfe);
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+/* ---------- Estado vazio ---------- */
+
+.empty {
+  text-align: center;
+  padding: 56px 20px;
+  color: var(--text-muted);
+}
+
+.empty .empty-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.empty strong {
+  display: block;
+  color: var(--text);
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+/* ---------- Flash ---------- */
+
+.notice {
+  background: #e8f8f0;
+  color: var(--success);
+  border: 1px solid #c7ecd8;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 18px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  animation: slide-in 0.25s ease;
+}
+
+.alert {
+  background: #fdecea;
+  color: var(--danger);
+  border: 1px solid #f6c8c2;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 18px;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+/* ---------- Erros de validação ---------- */
+
+.errors {
+  background: #fdecea;
+  color: var(--danger);
+  border: 1px solid #f6c8c2;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+}
+
+.errors ul {
+  margin-left: 18px;
+}
+
+/* ---------- Detalhe da tarefa ---------- */
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row dt {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 99px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.badge-pending {
+  background: #fff4e0;
+  color: #e67e22;
+}
+
+.badge-done {
+  background: #e8f8f0;
+  color: var(--success);
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.6rem;
+  }
+
+  .new-todo {
+    flex-direction: column;
+  }
+}

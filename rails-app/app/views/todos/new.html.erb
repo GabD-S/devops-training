@@ -1,11 +1,11 @@
-<% content_for :title, "New todo" %>
+<% content_for :title, "Nova tarefa" %>
 
-<h1>New todo</h1>
-
-<%= render "form", todo: @todo %>
-
-<br>
-
-<div>
-  <%= link_to "Back to todos", todos_path %>
+<div class="hero">
+  <h1>Nova <span>tarefa</span> ✨</h1>
 </div>
+
+<div class="card">
+  <%= render "form", todo: @todo %>
+</div>
+
+<%= link_to "← Voltar para a lista", todos_path, class: "btn btn-ghost btn-back" %>

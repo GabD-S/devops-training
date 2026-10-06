@@ -1,16 +1,35 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Todos" %>
 
-<h1>Todos</h1>
+<div class="hero">
+  <h1>Minhas <span>Tarefas</span> 📝</h1>
+  <p>Organize seu dia, uma tarefa de cada vez.</p>
+</div>
 
-<div id="todos">
-  <% @todos.each do |todo| %>
-    <%= render todo %>
-    <p>
-      <%= link_to "Show this todo", todo %>
-    </p>
+<div class="card">
+  <%= form_with(model: Todo.new, url: todos_path, class: "new-todo") do |form| %>
+    <%= form.text_field :title, placeholder: "O que precisa ser feito?", required: true, autocomplete: "off" %>
+    <%= form.submit "Adicionar", class: "btn btn-primary" %>
   <% end %>
 </div>
 
-<%= link_to "New todo", new_todo_path %>
+<% if @todos.any? %>
+  <% done = @todos.count(&:completed?) %>
+  <div class="stats">
+    <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="<%= @todos.size %>" aria-valuenow="<%= done %>">
+      <div class="progress-bar" style="width: <%= (done.to_f / @todos.size * 100).round %>%"></div>
+    </div>
+    <span><%= done %>/<%= @todos.size %> concluídas</span>
+  </div>
+
+  <div id="todos" class="todo-list">
+    <% @todos.each do |todo| %>
+      <%= render todo %>
+    <% end %>
+  </div>
+<% else %>
+  <div class="empty card">
+    <span class="empty-icon">🎉</span>
+    <strong>Nada por aqui!</strong>
+    Adicione sua primeira tarefa acima.
+  </div>
+<% end %>

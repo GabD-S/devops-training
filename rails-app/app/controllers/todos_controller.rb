@@ -24,16 +24,16 @@ class TodosController < ApplicationController
     @todo = Todo.new(todo_params)
 
     if @todo.save
-      redirect_to @todo, notice: "Todo was successfully created."
+      redirect_to todos_path, notice: "Tarefa criada com sucesso."
     else
-      render :new, status: :unprocessable_content
+      redirect_to todos_path, alert: @todo.errors.full_messages.to_sentence, status: :see_other
     end
   end
 
   # PATCH/PUT /todos/1
   def update
     if @todo.update(todo_params)
-      redirect_to @todo, notice: "Todo was successfully updated.", status: :see_other
+      redirect_back_or_to todos_path, notice: "Tarefa atualizada com sucesso.", status: :see_other
     else
       render :edit, status: :unprocessable_content
     end
@@ -42,7 +42,7 @@ class TodosController < ApplicationController
   # DELETE /todos/1
   def destroy
     @todo.destroy!
-    redirect_to todos_path, notice: "Todo was successfully destroyed.", status: :see_other
+    redirect_to todos_path, notice: "Tarefa excluída.", status: :see_other
   end
 
   private

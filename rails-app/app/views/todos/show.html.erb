@@ -1,10 +1,35 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, @todo.title %>
 
-<%= render @todo %>
-
-<div>
-  <%= link_to "Edit this todo", edit_todo_path(@todo) %> |
-  <%= link_to "Back to todos", todos_path %>
-
-  <%= button_to "Destroy this todo", @todo, method: :delete %>
+<div class="hero">
+  <h1>Detalhe da <span>tarefa</span> 🔍</h1>
 </div>
+
+<div class="card">
+  <dl>
+    <div class="detail-row">
+      <dt>Tarefa</dt>
+      <dd><%= @todo.title %></dd>
+    </div>
+    <div class="detail-row">
+      <dt>Status</dt>
+      <dd>
+        <% if @todo.completed? %>
+          <span class="badge badge-done">Concluída</span>
+        <% else %>
+          <span class="badge badge-pending">Pendente</span>
+        <% end %>
+      </dd>
+    </div>
+    <div class="detail-row">
+      <dt>Criada em</dt>
+      <dd><%= l(@todo.created_at, format: :long) rescue @todo.created_at.strftime("%d/%m/%Y às %H:%M") %></dd>
+    </div>
+  </dl>
+
+  <div style="display: flex; gap: 10px; margin-top: 16px;">
+    <%= link_to "Editar", edit_todo_path(@todo), class: "btn btn-primary" %>
+    <%= button_to "Excluir", @todo, method: :delete, class: "btn btn-ghost", form_class: nil, data: { turbo_confirm: "Excluir esta tarefa?" } %>
+  </div>
+</div>
+
+<%= link_to "← Voltar para a lista", todos_path, class: "btn btn-ghost btn-back" %>
