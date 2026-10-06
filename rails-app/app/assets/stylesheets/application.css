@@ -475,3 +475,5 @@ input[type="text"]:focus {
     flex-direction: column;
   }
 }
+
+.app-footer { margin: 2rem auto 1rem; text-align: center; font-size: 0.8rem; color: #6b7280; }

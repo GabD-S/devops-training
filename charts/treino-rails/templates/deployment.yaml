@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: treino-rails
+  labels:
+    app: treino-rails
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: treino-rails
+  template:
+    metadata:
+      labels:
+        app: treino-rails
+    spec:
+      initContainers:
+        - name: db-migrate
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          command: ["./bin/rails", "db:prepare"]
+          env:
+            - name: RAILS_DATABASE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: treino-postgres-app
+                  key: host
+            - name: RAILS_APP_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: treino-postgres-app
+                  key: password
+            - name: SECRET_KEY_BASE
+              value: "{{ .Values.secretKeyBase }}"
+      containers:
+        - name: api
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - name: http
+              containerPort: 3000
+          env:
+            - name: RAILS_DATABASE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: treino-postgres-app
+                  key: host
+            - name: RAILS_APP_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: treino-postgres-app
+                  key: password
+            - name: SECRET_KEY_BASE
+              value: "{{ .Values.secretKeyBase }}"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 200Mi
+            limits:
+              memory: 400Mi
+          livenessProbe:
+            httpGet:
+              path: /up
+              port: http
+            failureThreshold: 3
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /up
+              port: http
+            failureThreshold: 3
+            periodSeconds: 10
+          startupProbe:
+            httpGet:
+              path: /up
+              port: http
+            failureThreshold: 18
+            periodSeconds: 10

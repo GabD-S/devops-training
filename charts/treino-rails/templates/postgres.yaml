@@ -1,0 +1,18 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: treino-postgres
+  annotations:
+    # Protege o banco contra "prune": se alguem apagar este arquivo do Git,
+    # o Argo avisa (OutOfSync) mas NAO apaga o banco.
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  instances: 1
+  bootstrap:
+    initdb:
+      # Nomes que o database.yml da app espera em producao.
+      # Sem 'secret': o CNPG gera a senha e a grava no Secret treino-postgres-app.
+      database: rails_app_production
+      owner: rails_app
+  storage:
+    size: 1Gi

@@ -29,5 +29,8 @@
       <% end %>
       <%= yield %>
     </main>
+    <footer class="app-footer">
+      versão <strong><%= ENV.fetch("APP_VERSION", "dev") %></strong> · pod <strong><%= ENV.fetch("HOSTNAME") { Socket.gethostname } %></strong>
+    </footer>
   </body>
 </html>
